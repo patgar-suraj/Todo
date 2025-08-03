@@ -1,0 +1,194 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  background-color: #26292e;
+}
+
+.horizontalLine {
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, #00c3ff, #ffff1c);
+}
+
+.main {
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 20px;
+  position: relative;
+}
+
+.navBar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #a9b1b4;
+  padding: 20px;
+}
+
+.navBar h1 {
+  text-align: center;
+  cursor: default;
+}
+
+.navBar h1:hover {
+  background: linear-gradient(90deg, #00c3ff, #ffff1c);
+  background-clip: text;
+  color: transparent;
+}
+
+.menuBtns span {
+  font-size: 28px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.menuBtns span:hover {
+  background: linear-gradient(90deg, #00c3ff, #ffff1c);
+  background-clip: text;
+  color: transparent;
+}
+
+.menuBtns {
+  display: flex;
+  gap: 20px;
+}
+
+.allElems {
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.elem {
+  width: 150px;
+  height: 240px;
+  margin-bottom: 80px;
+  cursor: pointer;
+}
+
+.elem img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all 0.3s ease-in-out;
+  border-radius: 20px;
+  border: 2px solid #a9b1b4;
+  margin-bottom: 10px;
+}
+
+.elem img:hover {
+  scale: 1.05;
+  box-shadow: -5px -5px 20px #111112;
+}
+
+.elem img:active {
+  scale: 1.02;
+}
+
+.elem .header {
+  width: 100%;
+  padding: 10px;
+  color: #a9b1b4e3;
+  background-color: #36393ead;
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 2px solid #a9b1b4c3;
+}
+
+.elem .header:hover {
+  color: #a9b1b4;
+  background-color: #36393e;
+}
+
+.elem h1 {
+  transition: all 0.3s ease-in-out;
+  font-size: 16px;
+}
+
+.elem h1:active {
+  scale: 0.96;
+}
+
+.fullElem {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #26292e;
+  color: #a9b1b4;
+  padding: 50px;
+  display: none;
+}
+
+.pageBar {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.pageBar h1:hover {
+  background: linear-gradient(90deg, #00c3ff, #ffff1c);
+  background-clip: text;
+  color: transparent;
+}
+
+.pageBar h1 {
+  cursor: default;
+}
+
+.pageBar span {
+  font-size: 28px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.pageBar span:hover {
+  background: linear-gradient(90deg, #00c3ff, #ffff1c);
+  background-clip: text;
+  color: transparent;
+}
+
+@media (min-width: 1025px) {
+  .main {
+    padding: 50px;
+  }
+
+  .elem {
+    width: 240px;
+    height: 348px;
+  }
+
+  .allElems {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 50px;
+  }
+
+  .elem h1 {
+    font-size: 23px;
+  }
+
+  .menuBtns span {
+    display: none;
+  }
+}
