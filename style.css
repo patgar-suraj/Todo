@@ -29,7 +29,7 @@ body {
   padding: 20px;
   position: relative;
 }
-
+/* ////////////////////////////////////////////////////////////////////////// */
 .navBar {
   width: 100%;
   display: flex;
@@ -50,23 +50,23 @@ body {
   color: transparent;
 }
 
-.menuBtns span {
+.navBtns span {
   font-size: 28px;
   font-weight: 900;
   cursor: pointer;
 }
 
-.menuBtns span:hover {
+.navBtns span:hover {
   background: linear-gradient(90deg, #00c3ff, #ffff1c);
   background-clip: text;
   color: transparent;
 }
 
-.menuBtns {
+.navBtns {
   display: flex;
   gap: 20px;
 }
-
+/* ////////////////////////////////////////////////////////////////////////// */
 .allElems {
   width: 100%;
   height: auto;
@@ -127,7 +127,7 @@ body {
 .elem h1:active {
   scale: 0.96;
 }
-
+/* ////////////////////////////////////////////////////////////////////////// */
 .fullElem {
   width: 100%;
   height: 100%;
@@ -136,7 +136,7 @@ body {
   left: 0;
   background-color: #26292e;
   color: #a9b1b4;
-  padding: 50px;
+  padding: 10px;
   display: none;
 }
 
@@ -167,7 +167,190 @@ body {
   background-clip: text;
   color: transparent;
 }
+/* /////////////////////////////////////////////////////////////////////////// */
+.todoPage {
+  display: block;
+}
+/* ......................................................................... */
+/* create todo page */
+/* laptop view */
+.todoPage .todo-create-show .todoCreate {
+  display: none;
+}
+/* mobile view */
+.todoPage .todo-create-show .createTodo {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  cursor: pointer;
+}
 
+.todoPage .todo-create-show .createTodo .createTodoBtn {
+  width: 54px;
+  aspect-ratio: 1/1;
+  text-align: center;
+  color: #a9b1b4;
+  background-color: #00c3ff;
+  border-radius: 50%;
+  border: none;
+  transition: all 0.2s ease-in;
+}
+
+.todoPage .todo-create-show .createTodo .createTodoBtn {
+  font-size: 36px;
+  margin-left: 14px;
+}
+
+.todoPage .todo-create-show .createTodo .createTodoBtn:active {
+  scale: 0.96;
+  background-color: #00c3ffcc;
+}
+
+.todoPage .todo-create-show .createTodo .createTodoPage {
+  width: 100%;
+  /* display: flex; */
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 10px;
+  gap: 10px;
+}
+
+.todoPage .todo-create-show .createTodo .createTodoPage #createTitle {
+  width: 100%;
+  height: 50px;
+  padding: 5px;
+  border-radius: 10px;
+  border: none;
+  background-color: #313439;
+  font-size: 16px;
+  color: aliceblue;
+  border: 2px solid #a9b1b4;
+}
+
+.todoPage .todo-create-show .createTodo .createTodoPage #todoDescription {
+    width: 100%;
+    min-height: 150px;
+    padding: 5px;
+    border-radius: 10px;
+    border: none;
+    background-color: #313439;
+    font-size: 16px;
+    color: aliceblue;
+    border: 2px solid #a9b1b4;
+    resize: vertical;
+  }
+
+  .todoPage .todo-create-show .createTodo .createTodoPage .createTodoBtn {
+    width: 100px;
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+    background-color: #00c3ff;
+    color: aliceblue;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+/* ......................................................................... */
+/* show todo page */
+.todoPage .todo-create-show .showTodo {
+  width: 100%;
+  height: 100%;
+  margin-top: 30px;
+}
+
+.todoPage .todo-create-show .showTodo .todoContent {
+  padding: 5px;
+  gap: 5px;
+  border-radius: 10px;
+  width: 100%;
+  overflow-x: hidden;
+  word-break: break-all;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.todoPage .todo-create-show .showTodo .todoContent .outerMark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 12px;
+  width: 30px;
+  aspect-ratio: 1/1;
+  background-color: #00c3ff;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 3px;
+}
+
+.todoPage .todo-create-show .showTodo .todoContent .outerMark:active {
+  scale: 0.96;
+}
+
+.todoPage .todo-create-show .showTodo .todoContent .outerMark .innerMark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 1/1;
+  background-color: #26292e;
+  border-radius: 50%;
+}
+
+.todoPage
+  .todo-create-show
+  .showTodo
+  .todoContent
+  .outerMark
+  .innerMark
+  .readMark {
+  background-color: #00c3ff;
+  border-radius: 50%;
+  padding: 8px;
+  display: none;
+}
+
+.todoPage .todo-create-show .showTodo .todoContent .content {
+  background-color: #313439;
+  padding: 10px;
+  border-radius: 10px;
+  text-decoration: line-through;
+  text-decoration-color: red;
+  border: 2px solid #a9b1b4;
+}
+
+.todoPage .todo-create-show .showTodo .todoContent .content h2 {
+  font-weight: 600;
+}
+
+.todoPage .todo-create-show .showTodo .todoContent .content h3 {
+  font-weight: 500;
+}
+
+.todoPage .todo-create-show .showTodo .todoContent .content hr {
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.todoPage .todo-create-show .showTodo .todoContent .deleteTodo .deleteBtn {
+  background-color: red;
+  padding: 5px;
+  margin-top: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.todoPage .todo-create-show .showTodo .todoContent .deleteTodo .deleteBtn:active {
+  scale: 0.96;
+}
+/* //////////////////////////////////////////////////////////////////////////// */
 @media (min-width: 1025px) {
   .main {
     padding: 50px;
@@ -188,7 +371,71 @@ body {
     font-size: 23px;
   }
 
-  .menuBtns span {
+  .navBtns span {
     display: none;
+  }
+
+  .fullElem {
+    padding: 50px;
+  }
+  /* ////////////////////////////////////////////////////////////////////// */
+  .todo-create-show {
+    display: flex;
+  }
+  /* mobile view */
+  .todoPage .todo-create-show .createTodo {
+    display: none;
+  }
+  /* laptop view */
+  .todoPage .todo-create-show .todoCreate {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    padding: 10px;
+    margin-top: 26px;
+    /* background-color: #00c3ff; */
+  }
+
+  .todoPage .todo-create-show .todoCreate #createTitle {
+    width: 100%;
+    height: 50px;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    background-color: #313439;
+    font-size: 20px;
+    color: aliceblue;
+    border: 2px solid #a9b1b4;
+  }
+
+  .todoPage .todo-create-show .todoCreate #todoDescription {
+    width: 100%;
+    min-height: 250px;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    background-color: #313439;
+    font-size: 20px;
+    color: aliceblue;
+    border: 2px solid #a9b1b4;
+    resize: vertical;
+  }
+
+  .todoPage .todo-create-show .todoCreate .createTodoBtn {
+    width: 150px;
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+    background-color: #00c3ff;
+    color: aliceblue;
+    font-size: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .todoPage .todo-create-show .todoCreate .createTodoBtn:active {
+    scale: 0.96;
   }
 }
