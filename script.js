@@ -40,17 +40,21 @@ function createTodo() {
     // create todo function...................................................
     let sum = "";
     currentTask.forEach(function (elem, id) {
-
-      readMarkStyle = elem.isCompleted ? "block" : "none"
+      let readMarkStyle = elem.isCompleted ? "block" : "none";
+      let contentTextStyle = elem.isCompleted ? "line-through" : "none";
+      // Add textDecorationColor inline if completed, else not
+      let contentTextColorStyle = elem.isCompleted
+        ? "text-decoration-color: red;"
+        : "";
       sum += `<div class="todoContent">
                         <div class="content">
                             <div class="todoContentTools">
                                 <div class="impTask ${elem.impTask}">
                                     Imp
                                 </div>
-                                <div class="outerMark">
+                                <div class="outerMark" data-id="${id}">
                                     <div class="innerMark">
-                                        <div id="${id}" class="readMark" style="display: ${readMarkStyle};"></div>
+                                        <div data-id="${id}" class="readMark" style="display: ${readMarkStyle}; pointer-events: auto;"></div>
                                     </div>
                                 </div>
                                 <div class="deleteTodo">
@@ -58,7 +62,7 @@ function createTodo() {
                                 </div>
                             </div>
 
-                            <div class="contentText">
+                            <div class="contentText" data-id="${id}" style="text-decoration: ${contentTextStyle}; ${contentTextColorStyle}">
                                 <h2>${elem.title}
                                 </h2>
                                 <hr>
@@ -71,7 +75,7 @@ function createTodo() {
     showTodo.innerHTML = sum;
     localStorage.setItem("currentTask", JSON.stringify(currentTask));
 
-    // delete todo functio...........................................................
+    // delete todo function...........................................................
     document.querySelectorAll(".deleteBtn").forEach(function (btn) {
       btn.addEventListener("click", function () {
         currentTask.splice(btn.id, 1);
@@ -79,20 +83,66 @@ function createTodo() {
       });
     });
 
-    // read mark........................................................................
-    let readMark = document.querySelectorAll(".readMark");
+    // Make outerMark toggle readMark (show/hide) and update isCompleted
+    let outerMarks = document.querySelectorAll(".outerMark");
 
-    readMark.forEach(function (read) {
-      read.addEventListener("click", function () {
-        currentTask[read.id].isCompleted = !currentTask[read.id].isCompleted
+    outerMarks.forEach(function (outerMark) {
+      outerMark.addEventListener("click", function (e) {
+        // If clicking the readMark, let its own handler handle it
+        if (e.target.classList.contains("readMark")) return;
+        if (e.target.classList.contains("contentText")) return;
+        let idx = parseInt(outerMark.getAttribute("data-id"), 10);
+        if (isNaN(idx) || idx < 0 || idx >= currentTask.length) return;
+        // Toggle isCompleted
+        currentTask[idx].isCompleted = !currentTask[idx].isCompleted;
 
-        if(currentTask[read.id].isCompleted) {
-          read.style.display = "block"
-        }else {
-          read.style.display = "none"
+        // Update display
+        let readMark = outerMark.querySelector(".readMark");
+        // Find the corresponding contentText in the DOM
+        let contentText = outerMark
+          .closest(".content")
+          .querySelector(".contentText");
+        if (readMark) {
+          readMark.style.display = currentTask[idx].isCompleted
+            ? "block"
+            : "none";
         }
-
+        if (contentText) {
+          contentText.style.textDecoration = currentTask[idx].isCompleted
+            ? "line-through"
+            : "none";
+          contentText.style.textDecorationColor = currentTask[idx].isCompleted
+            ? "red"
+            : "none";
+        }
+        // Save to localStorage
         localStorage.setItem("currentTask", JSON.stringify(currentTask));
+      });
+    });
+
+    // Make clicking readMark also hide it and update isCompleted
+    let readMarks = document.querySelectorAll(".readMark");
+    readMarks.forEach(function (read) {
+      read.addEventListener("click", function (e) {
+        let idx = parseInt(read.getAttribute("data-id"), 10);
+        if (isNaN(idx) || idx < 0 || idx >= currentTask.length) return;
+        // If already hidden, do nothing
+        if (!currentTask[idx].isCompleted) return;
+        // Hide the readMark and update isCompleted
+        currentTask[idx].isCompleted = false;
+        read.style.display = "none";
+        // Also update contentText line-through
+        // Find the corresponding contentText in the DOM
+        let contentText = read
+          .closest(".content")
+          .querySelector(".contentText");
+        if (contentText) {
+          contentText.style.textDecoration = "none";
+          contentText.style.textDecorationColor = "none";
+        }
+        localStorage.setItem("currentTask", JSON.stringify(currentTask));
+        // Prevent bubbling to outerMark
+        e.stopPropagation();
       });
     });
   }
@@ -102,11 +152,16 @@ function createTodo() {
   form.addEventListener("submit", function (e) {
     e.preventDefault();
 
-    currentTask.push({
-      title: title.value,
-      description: description.value,
-      impTask: checkBox.checked,
-    });
+    if (title.value.length > 0 || description.value.length > 0) {
+      currentTask.push({
+        title: title.value,
+        description: description.value,
+        impTask: checkBox.checked,
+        isCompleted: false, // Ensure new todos are not completed by default
+      });
+    } else {
+      alert("Title or Description is required to create a Todo");
+    }
 
     title.value = "";
     description.value = "";
@@ -116,5 +171,20 @@ function createTodo() {
 }
 createTodo();
 // localStorage.clear()
-
 // ............................................................................
+// open or close createTodo page
+let openTodoPage = document.querySelector(".todo-create-show .addTodoBtn");
+let createTodoPage = document.querySelector(
+  ".todo-create-show .createTodoPage"
+);
+let togglePage = false;
+
+openTodoPage.addEventListener("click", function () {
+  if (!togglePage) {
+    createTodoPage.style.display = "flex";
+    togglePage = true;
+  } else {
+    createTodoPage.style.display = "none";
+    togglePage = false;
+  }
+});
