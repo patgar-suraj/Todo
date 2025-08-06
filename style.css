@@ -169,10 +169,6 @@ body {
   color: transparent;
 }
 /* ......................................................................... */
-.todoPage {
-  display: block;
-}
-/* ......................................................................... */
 /* create todo page */
 .todoPage .todo-create-show {
   gap: 20px;
@@ -370,7 +366,6 @@ body {
   background-color: #00c3ff;
   border-radius: 50%;
   padding: 8px;
-  display: none;
 }
 
 .todoPage .todo-create-show .showTodo .todoContent .content {

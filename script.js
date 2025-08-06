@@ -16,21 +16,33 @@ function openPages() {
   });
 }
 openPages();
+
 // ////////////////////////////////////////////////////////////
-
-// create todo list
-let form = document.querySelector(".todo-create-show form");
-let title = document.querySelector(".todo-create-show #createTitle");
-let descrption = document.querySelector(".todo-create-show #todoDescription");
-let checkBox = document.querySelector(".todo-create-show #checkbox");
-
-let currentTask = [];
-
-function renderTodo() {
+// create & show & save todo list
+function createTodo() {
+  let form = document.querySelector(".todo-create-show form");
+  let title = document.querySelector(".todo-create-show #createTitle");
+  let description = document.querySelector(
+    ".todo-create-show #todoDescription"
+  );
+  let checkBox = document.querySelector(".todo-create-show #checkbox");
   let showTodo = document.querySelector(".showTodo");
-  let sum = "";
-  currentTask.forEach(function (elem) {
-    sum += `<div class="todoContent">
+
+  let currentTask = [];
+
+  if (localStorage.getItem("currentTask")) {
+    currentTask = JSON.parse(localStorage.getItem("currentTask"));
+  } else {
+    console.log("currentTask is empty");
+  }
+
+  function renderTodo() {
+    // create todo function...................................................
+    let sum = "";
+    currentTask.forEach(function (elem, id) {
+
+      readMarkStyle = elem.isCompleted ? "block" : "none"
+      sum += `<div class="todoContent">
                         <div class="content">
                             <div class="todoContentTools">
                                 <div class="impTask ${elem.impTask}">
@@ -38,11 +50,11 @@ function renderTodo() {
                                 </div>
                                 <div class="outerMark">
                                     <div class="innerMark">
-                                        <div class="readMark"></div>
+                                        <div id="${id}" class="readMark" style="display: ${readMarkStyle};"></div>
                                     </div>
                                 </div>
                                 <div class="deleteTodo">
-                                    <div class="deleteBtn">🗑️</div>
+                                    <div id="${id}" class="deleteBtn">🗑️</div>
                                 </div>
                             </div>
 
@@ -55,22 +67,54 @@ function renderTodo() {
                             </div>
                         </div>
                     </div>`;
-  });
-  showTodo.innerHTML = sum;
-}
-renderTodo();
+    });
+    showTodo.innerHTML = sum;
+    localStorage.setItem("currentTask", JSON.stringify(currentTask));
 
-form.addEventListener("submit", function (e) {
-  e.preventDefault();
+    // delete todo functio...........................................................
+    document.querySelectorAll(".deleteBtn").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        currentTask.splice(btn.id, 1);
+        renderTodo();
+      });
+    });
 
-  currentTask.push({
-    title: title.value,
-    descrption: descrption.value,
-    impTask: checkBox.checked,
-  });
+    // read mark........................................................................
+    let readMark = document.querySelectorAll(".readMark");
 
-  title.value = "";
-  descrption.value = "";
-  checkBox.checked = false;
+    readMark.forEach(function (read) {
+      read.addEventListener("click", function () {
+        currentTask[read.id].isCompleted = !currentTask[read.id].isCompleted
+
+        if(currentTask[read.id].isCompleted) {
+          read.style.display = "block"
+        }else {
+          read.style.display = "none"
+        }
+
+        localStorage.setItem("currentTask", JSON.stringify(currentTask));
+      });
+    });
+  }
   renderTodo();
-});
+
+  // add todo to current task ...........................................................
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    currentTask.push({
+      title: title.value,
+      description: description.value,
+      impTask: checkBox.checked,
+    });
+
+    title.value = "";
+    description.value = "";
+    checkBox.checked = false;
+    renderTodo();
+  });
+}
+createTodo();
+// localStorage.clear()
+
+// ............................................................................
