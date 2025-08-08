@@ -157,7 +157,7 @@ function createTodo() {
         title: title.value,
         description: description.value,
         impTask: checkBox.checked,
-        isCompleted: false, // Ensure new todos are not completed by default
+        isCompleted: false,
       });
     } else {
       alert("Title or Description is required to create a Todo");
